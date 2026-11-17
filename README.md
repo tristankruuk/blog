@@ -1,58 +1,190 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Cloning the Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Clone the project into a new directory and navigate to it:
 
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```powershell
+git clone https://github.com/tristankruuk/blog.git <directory-name>
+cd <directory-name>
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+# Installing Required Tools
 
-## Contributing
+Install the required tools using Windows Package Manager (Winget):
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```powershell
+winget install -e --id Git.Git
+winget install -e --id Microsoft.VisualStudioCode
+winget install -e --id PHP.PHP.8.5
+```
 
-## Code of Conduct
+Verify the installations:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```powershell
+git --version
+code --version
+php --version
+```
 
-## Security Vulnerabilities
+# Configuring PHP Extensions
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Find the PHP executable location using:
 
-## License
+```powershell
+where.exe php
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Open the PHP installation directory in File Explorer and locate the `php.ini` configuration file.
+
+In `php.ini`, enable the following extensions by removing the leading semicolon (`;`). Do not add duplicate entries if a line is already enabled:
+
+```ini
+extension_dir = "ext"
+extension=curl
+extension=fileinfo
+extension=mbstring
+extension=openssl
+extension=pdo_sqlite
+extension=sqlite3
+extension=zip
+```
+
+Save the file and verify that the extensions are enabled:
+
+```powershell
+php -m
+```
+
+Check that all the extensions listed above appear in the output.
+
+You can also verify individual extensions using:
+
+```powershell
+php -r "foreach (['curl', 'fileinfo', 'mbstring', 'openssl', 'pdo_sqlite', 'sqlite3', 'zip'] as $ext) { echo $ext . ': ' . (extension_loaded($ext) ? 'enabled' : 'missing') . PHP_EOL; }"
+```
+
+Restart any running PHP server after changing `php.ini`.
+
+# External Installations
+
+## Installing Bun
+
+Follow the official [Bun installation instructions](https://bun.com/get) or copy this link:
+
+https://bun.com/get
+
+Verify the installation:
+
+```powershell
+bun --version
+```
+
+## Installing Composer
+
+Download and run the official [Composer Windows installer](https://getcomposer.org/download/) or copy this link:
+
+https://getcomposer.org/download/
+
+Verify the installation:
+
+```powershell
+composer --version
+```
+
+# Installing Project Dependencies
+
+Install the PHP dependencies using Composer:
+
+```powershell
+composer install
+```
+
+Verify that the dependencies are installed:
+
+```powershell
+composer check-platform-reqs
+```
+
+Install the JavaScript dependencies using Bun:
+
+```powershell
+bun install
+```
+
+Verify the Bun installation and project dependencies:
+
+```powershell
+bun --version
+bun pm ls
+```
+
+# Creating the `.env` File
+
+Copy the `.env.example` file and rename it to `.env` using the following command:
+
+```powershell
+cp .env.example .env
+```
+
+Verify that the `.env` file exists:
+
+```powershell
+Test-Path .env
+```
+
+The command should return `True`.
+
+Generate the Laravel application key. This only needs to be done once during the initial setup:
+
+```powershell
+php artisan key:generate
+```
+
+Verify that the application key is configured:
+
+```powershell
+php artisan key:show
+```
+
+# Database Migration
+
+Run the database migrations during the initial setup:
+
+```powershell
+php artisan migrate
+```
+
+Confirm the migration if prompted.
+
+Verify the database connection and configuration:
+
+```powershell
+php artisan migrate:status
+```
+
+# Creating the Storage Link
+
+Create a symbolic link to make publicly accessible storage files available:
+
+```powershell
+php artisan storage:link
+```
+
+Verify that the storage link exists:
+
+```powershell
+Test-Path public/storage
+```
+
+The command should return `True`.
+
+# Running Laravel
+
+Start the Laravel development environment using:
+
+```powershell
+composer run dev
+```
+
+Keep the terminal running while using the application.
+
+Open the local development URL displayed in the terminal to access the application.
