@@ -31,15 +31,5 @@
                         </td>
                     </tr>
                 @endforeach
-            </tbody>
-            <tfoot>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Created</th>
-                <th>Updated</th>
-                <th>Actions</th>
-            </tfoot>
-        </table>
-        {{ $posts->links() }}
     </div>
 @endsection
