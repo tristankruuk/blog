@@ -1,10 +1,20 @@
 @extends('partials.layout')
 @section('content')
-    <div class="container mx-auto">
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
 
-        <form method="POST" action="{{ route('login') }}" class="card bg-base-300 shadow-sm w-2/3 mx-auto p-3">
+    <!-- Alert -->
+    @if (session('status'))
+        <div role="alert" class="alert alert-success">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            @lang("You've logged in successfully!")
+        </div>
+    @endif
+
+    <!-- Body -->
+    <div class="container mx-auto">
+        <form method="POST" action="{{ route('login') }}" class="card bg-base-300 shadow-sm w-2/3 mx-auto p-6">
             @csrf
 
             <!-- Email Address -->
@@ -37,8 +47,7 @@
             </fieldset>
             <div class="flex items-center justify-end mt-4">
                 @if (Route::has('password.request'))
-                    <a class="btn btn-link"
-                        href="{{ route('password.request') }}">
+                    <a class="btn btn-link" href="{{ route('password.request') }}">
                         {{ __('Forgot your password?') }}
                     </a>
                 @endif
@@ -49,4 +58,5 @@
             </div>
         </form>
     </div>
+
 @endsection
