@@ -10,13 +10,8 @@ class PublicController extends Controller
     // $posts = Post::limit(24)->offset(24)->get();
     // $posts = Post::take(24)->skip(24)->get();
 
-    public function index(Request $request) {
-        $perPage = 16;
-        $page = $request->query('page');
-        
-        // 1 => 0 ; 2 => 16 ; 3 => 32 ; 4 => 48; => 5 => 64
-        $skip = ($page - 1) * $perPage;
-        $posts = Post::take($perPage)->skip($skip)->get();
+    public function index() {
+        $posts = Post::simplePaginate(16);
         return view('welcome', compact('posts'));
     }
 
