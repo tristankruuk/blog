@@ -8,7 +8,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            {{ session('status') }}
+            @lang('Verification link sent!')
         </div>
     @endif
 
@@ -22,16 +22,7 @@
             </div>
 
             <!-- Buttons -->
-            <div class="flex items-center justify-between mt-4">
-
-                <!-- Resend Verification Email -->
-                <form method="POST" action="{{ route('verification.send') }}">
-                    @csrf
-
-                    <button type="submit" class="btn btn-primary">
-                        @lang('Resend Verification Email')
-                    </button>
-                </form>
+            <div class="flex items-center justify-end mt-4">
 
                 <!-- Log Out -->
                 <form method="POST" action="{{ route('logout') }}">
@@ -39,6 +30,15 @@
 
                     <button type="submit" class="btn btn-link">
                         @lang('Log Out')
+                    </button>
+                </form>
+
+                <!-- Resend Verification Email -->
+                <form method="POST" action="{{ route('verification.send') }}">
+                    @csrf
+
+                    <button type="submit" class="btn btn-primary">
+                        @lang('Resend Verification Email')
                     </button>
                 </form>
 

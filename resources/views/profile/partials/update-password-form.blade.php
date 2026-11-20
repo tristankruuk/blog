@@ -5,12 +5,12 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
-        @lang('Password updated successfully.')
+        @lang('Password updated successfully!')
     </div>
 @endif
 
 <div class="container mx-auto">
-    <form method="POST" action="{{ route('profile.update') }}" class="card bg-base-300 shadow-sm w-full mx-auto p-6">
+    <form method="POST" action="{{ route('password.update') }}" class="card bg-base-300 shadow-sm w-full mx-auto p-6">
         @csrf
         @method('put')
 
