@@ -1,48 +1,66 @@
-<section>
-    <header>
-        <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Update Password') }}
-        </h2>
+<!-- Alert -->
+@if (session('status') === 'password-updated')
+    <div role="alert" class="alert alert-success fixed top-6 right-6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        @lang('Password updated successfully.')
+    </div>
+@endif
 
-        <p class="mt-1 text-sm text-gray-600">
-            {{ __('Ensure your account is using a long, random password to stay secure.') }}
-        </p>
-    </header>
-
-    <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
+<div class="container mx-auto">
+    <form method="POST" action="{{ route('profile.update') }}" class="card bg-base-300 shadow-sm w-full mx-auto p-6">
         @csrf
         @method('put')
 
-        <div>
-            <x-input-label for="update_password_current_password" :value="__('Current Password')" />
-            <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
-            <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
-        </div>
+        <!-- Text -->
+        <h2 class="text-2xl font-bold mb-3">
+            @lang('Update Password')
+        </h2>
 
-        <div>
-            <x-input-label for="update_password_password" :value="__('New Password')" />
-            <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
-        </div>
+        <p class="text-sm mb-6">
+            @lang('Ensure your account is using a long, random password to stay secure.')
+        </p>
 
-        <div>
-            <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" />
-            <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
-        </div>
+        <!-- Current Password -->
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">@lang('Current Password')</legend>
+            <input name="current_password" type="password"
+                class="input w-full @error('current_password', 'updatePassword') input-error @enderror" required
+                autocomplete="current-password" />
+            @error('current_password', 'updatePassword')
+                <p class="label text-error">{{ $message }}</p>
+            @enderror
+        </fieldset>
 
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+        <!-- New Password -->
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">@lang('New Password')</legend>
+            <input name="password" type="password"
+                class="input w-full @error('password', 'updatePassword') input-error @enderror" required
+                autocomplete="new-password" />
+            @error('password', 'updatePassword')
+                <p class="label text-error">{{ $message }}</p>
+            @enderror
+        </fieldset>
 
-            @if (session('status') === 'password-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
-                >{{ __('Saved.') }}</p>
-            @endif
+        <!-- Confirm Password -->
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">@lang('Confirm Password')</legend>
+            <input name="password_confirmation" type="password"
+                class="input w-full @error('password_confirmation', 'updatePassword') input-error @enderror" required
+                autocomplete="new-password" />
+            @error('password_confirmation', 'updatePassword')
+                <p class="label text-error">{{ $message }}</p>
+            @enderror
+        </fieldset>
+
+        <!-- Button -->
+        <div class="flex items-center justify-end mt-4">
+            <button class="btn btn-primary">
+                @lang('Save')
+            </button>
         </div>
     </form>
-</section>
+</div>

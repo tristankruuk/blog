@@ -1,55 +1,70 @@
-<section class="space-y-6">
-    <header>
-        <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Delete Account') }}
+<!-- Body -->
+<div class="container mx-auto">
+    <div class="card bg-base-300 shadow-sm w-full mx-auto p-6">
+
+        <!-- Text -->
+        <h2 class="text-2xl font-bold mb-3">
+            @lang('Delete Account')
         </h2>
 
-        <p class="mt-1 text-sm text-gray-600">
-            {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.') }}
+        <p class="text-sm mb-6">
+            @lang('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.')
         </p>
-    </header>
 
-    <x-danger-button
-        x-data=""
-        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-    >{{ __('Delete Account') }}</x-danger-button>
+        <!-- Button -->
+        <div class="flex items-center justify-end mt-4">
+            <button type="button" class="btn btn-error" onclick="delete_modal.showModal()">
+                @lang('Delete Account')
+            </button>
+        </div>
 
-    <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
-        <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
+    </div>
+</div>
+
+<!-- Modal -->
+<dialog id="delete_modal" class="modal">
+    <div class="modal-box">
+        <form method="POST" action="{{ route('profile.destroy') }}">
             @csrf
             @method('delete')
 
-            <h2 class="text-lg font-medium text-gray-900">
-                {{ __('Are you sure you want to delete your account?') }}
+            <!-- Text -->
+            <h2 class="text-xl font-bold mb-3">
+                @lang('Are you sure you want to delete your account?')
             </h2>
 
-            <p class="mt-1 text-sm text-gray-600">
-                {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
+            <p class="mb-4 text-sm">
+                @lang('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.')
             </p>
 
-            <div class="mt-6">
-                <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
+            <!-- Password -->
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">@lang('Password')</legend>
+                <input name="password" type="password"
+                    class="input w-full @error('password', 'userDeletion') input-error @enderror" required
+                    autocomplete="current-password" />
+                @error('password', 'userDeletion')
+                    <p class="label text-error">{{ $message }}</p>
+                @enderror
+            </fieldset>
 
-                <x-text-input
-                    id="password"
-                    name="password"
-                    type="password"
-                    class="mt-1 block w-3/4"
-                    placeholder="{{ __('Password') }}"
-                />
+            <!-- Buttons -->
+            <div class="modal-action">
+                <button type="button" class="btn" onclick="delete_modal.close()">
+                    @lang('Cancel')
+                </button>
 
-                <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
-            </div>
-
-            <div class="mt-6 flex justify-end">
-                <x-secondary-button x-on:click="$dispatch('close')">
-                    {{ __('Cancel') }}
-                </x-secondary-button>
-
-                <x-danger-button class="ms-3">
-                    {{ __('Delete Account') }}
-                </x-danger-button>
+                <button type="submit" class="btn btn-error">
+                    @lang('Delete Account')
+                </button>
             </div>
         </form>
-    </x-modal>
-</section>
+    </div>
+</dialog>
+
+<!-- Open Modal on Validation Error -->
+@if ($errors->userDeletion->isNotEmpty())
+    <script>
+        document.getElementById('delete_modal').showModal();
+    </script>
+@endif
