@@ -4,7 +4,7 @@
     <!-- Body -->
     <div class="container mx-auto">
 
-        <form method="POST" action="{{ route('register') }}" class="card bg-base-300 shadow-sm w-2/3 mx-auto p-6">
+        <form method="POST" action="{{ route('register') }}" class="card bg-base-300 shadow-sm w-2/3 mx-auto p-6 my-6">
             @csrf
 
             <!-- Name -->

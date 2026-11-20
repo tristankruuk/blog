@@ -1,7 +1,7 @@
 @extends('partials.layout')
 @section('content')
 
-    <div class="container mx-auto card bg-base-300 shadow-sm w-1/3 mx-auto p-6">
+    <div class="container mx-auto card bg-base-300 shadow-sm w-1/3 mx-auto p-6 my-6">
 
         @lang("You're logged in!")
 

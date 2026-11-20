@@ -3,7 +3,7 @@
 
     <!-- Alert -->
     @if (session('status'))
-        <div role="alert" class="alert alert-success">
+        <div role="alert" class="alert alert-success fixed top-6 right-6">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -14,7 +14,7 @@
 
     <!-- Body -->
     <div class="container mx-auto">
-        <form method="POST" action="{{ route('login') }}" class="card bg-base-300 shadow-sm w-2/3 mx-auto p-6">
+        <form method="POST" action="{{ route('login') }}" class="card bg-base-300 shadow-sm w-2/3 mx-auto p-6 my-6">
             @csrf
 
             <!-- Email Address -->
